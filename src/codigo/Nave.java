@@ -17,6 +17,8 @@ public class Nave {
     public Image imagen = null;
     public int x = 0;
     public int y = 0;
+    private boolean pulsadoDerecha = false;
+    private boolean pulsadoIzquierda = false;
     
     public Nave(){
         try {
@@ -24,5 +26,38 @@ public class Nave {
         } catch (IOException ex) {
             
         }
+    }
+    
+    public void mueve(){
+        
+        if(pulsadoIzquierda){
+            
+            x--;
+            
+        }
+        
+        if(pulsadoDerecha){
+            
+            x++;
+            
+        }
+    }
+
+    public boolean isPulsadoDerecha() {
+        return pulsadoDerecha;
+    }
+
+    public void setPulsadoDerecha(boolean pulsadoDerecha) {
+        this.pulsadoDerecha = pulsadoDerecha;
+        this.pulsadoIzquierda = false;
+    }
+
+    public boolean isPulsadoIzquierda() {
+        return pulsadoIzquierda;
+    }
+
+    public void setPulsadoIzquierda(boolean pulsadoIzquierda) {
+        this.pulsadoIzquierda = pulsadoIzquierda;
+        this.pulsadoDerecha = false;
     }
 }
