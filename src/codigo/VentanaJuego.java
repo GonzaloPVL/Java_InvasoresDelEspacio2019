@@ -10,6 +10,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import javax.swing.Timer;
 
@@ -36,6 +37,11 @@ public class VentanaJuego extends javax.swing.JFrame {
     //Marciano miMarciano = new Marciano();
     Marciano [][] listaMarcianos = new Marciano[filas][columnas];
     boolean direccionMarcianos = false;
+    // el contador sirve para decidir que imgen del marciano toca poner
+    int contador = 0;
+    
+    
+    
     
     Timer temporizador = new Timer(10, new ActionListener() {
         @Override
@@ -67,6 +73,7 @@ public class VentanaJuego extends javax.swing.JFrame {
                 listaMarcianos[i][j].y = i*(15+listaMarcianos[i][j].imagen1.getHeight(null));
             }
         }
+        miDisparo.posicionaDisparo(miNave);
     }
     
     
@@ -74,6 +81,7 @@ public class VentanaJuego extends javax.swing.JFrame {
         //se encarga del redibujado de los objetos en el jPanel1
         //primero borro todo lo que hay en el buffer
         
+        contador++;
         Graphics2D g2 = (Graphics2D) buffer.getGraphics();
         g2.setColor(Color.BLACK);
         g2.fillRect(0, 0, ANCHOPANTALLA, ALTOPANTALLA);
@@ -85,6 +93,7 @@ public class VentanaJuego extends javax.swing.JFrame {
         g2.drawImage(miNave.imagen, miNave.x, miNave.y , null);
         //g2.drawImage(miMarciano.imagen1, miMarciano.x, miMarciano.y , null);
         pintaMarcianos(g2);
+        chequeaColision();
         miNave.mueve();
         miDisparo.mueve();
         
@@ -98,16 +107,66 @@ public class VentanaJuego extends javax.swing.JFrame {
         g2.drawImage(buffer, 0, 0, null);
         
     }
+    private void chequeaColision(){
+        Rectangle2D.Double rectanguloMarciano = new Rectangle2D.Double();
+        Rectangle2D.Double rectanguloDisparo = new Rectangle2D.Double();
+        
+        rectanguloDisparo.setFrame(miDisparo.x,
+                                    miDisparo.y,
+                                    miDisparo.imagen.getWidth(null),
+                                    miDisparo.imagen.getHeight(null));
+        for(int i=0; i<filas; i++){
+            for(int j=0; j<columnas; j++){
+                rectanguloMarciano.setFrame(listaMarcianos[i][j].x,
+                                            listaMarcianos[i][j].y,
+                                            listaMarcianos[i][j].imagen1.getWidth(null),
+                                            listaMarcianos[i][j].imagen1.getHeight(null));
+                if(rectanguloDisparo.intersects(rectanguloMarciano)){
+                    listaMarcianos[i][j].y = 20000;
+                    miDisparo.y = 30000;
+                    
+                    
+                }
+            }
+        }
+    }
     
+
+    private void cambiaDireccionMarciano(){
+        for(int i=0; i<filas; i++){
+            for(int j=0; j<columnas; j++){
+                listaMarcianos[i][j].setvX(listaMarcianos[i][j].getvX()*-1);
+            }
+        }
+    }
     private void pintaMarcianos(Graphics2D _g2){
         
+        int anchoMarciano = listaMarcianos[0][0].imagen1.getWidth(null);
         for(int i=0; i<filas; i++){
             for(int j=0; j<columnas; j++){
                 listaMarcianos[i][j].mueve();
-                _g2.drawImage(listaMarcianos[i][j].imagen1, 
+                // chequeo si el marciano ha chocado contra la pared para cambiar la direccion
+                //de todos los marcianos
+                if(listaMarcianos[i][j].x + anchoMarciano == ANCHOPANTALLA){
+                    cambiaDireccionMarciano();
+                }
+                if(listaMarcianos[i][j].x  == 0){
+                    cambiaDireccionMarciano();
+                }
+                
+                
+                if(contador < 50){
+                   _g2.drawImage(listaMarcianos[i][j].imagen1, 
                               listaMarcianos[i][j].x, 
                               listaMarcianos[i][j].y, 
-                              null);
+                              null); 
+                }else if(contador < 100){
+                   _g2.drawImage(listaMarcianos[i][j].imagen2, 
+                              listaMarcianos[i][j].x, 
+                              listaMarcianos[i][j].y, 
+                              null); 
+                }
+                else contador = 0;
             }
         }
     }

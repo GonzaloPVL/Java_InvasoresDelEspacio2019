@@ -30,4 +30,12 @@ public class Marciano {
         
         x += vX;
     }
+
+    public void setvX(int vX) {
+        this.vX = vX;
+    }
+
+    public int getvX() {
+        return vX;
+    }
 }
