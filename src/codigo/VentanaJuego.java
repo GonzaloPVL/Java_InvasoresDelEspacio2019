@@ -73,7 +73,7 @@ public class VentanaJuego extends javax.swing.JFrame {
                 listaMarcianos[i][j].y = i*(15+listaMarcianos[i][j].imagen1.getHeight(null));
             }
         }
-        miDisparo.posicionaDisparo(miNave);
+        miDisparo.y = -100;
     }
     
     
@@ -124,8 +124,6 @@ public class VentanaJuego extends javax.swing.JFrame {
                 if(rectanguloDisparo.intersects(rectanguloMarciano)){
                     listaMarcianos[i][j].y = 20000;
                     miDisparo.y = 30000;
-                    
-                    
                 }
             }
         }
