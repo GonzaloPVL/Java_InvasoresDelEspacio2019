@@ -12,7 +12,8 @@ import javax.imageio.ImageIO;
 public class Disparo {
     public Image imagen = null;
     public int x = 0;
-    public int y = 0;
+    public int y = 2000; // al principio el disparo
+    public boolean disparado = false;
     
     
     
@@ -25,12 +26,15 @@ public class Disparo {
     }
     
     public void mueve(){
-        y-=5;
+        if(disparado){
+            y-=5;
+        }
     }
     
     public void posicionaDisparo(Nave _nave){
         x = _nave.x + _nave.imagen.getWidth(null)/2 - imagen.getWidth(null)/2;
         y = _nave.y;
+        
     }
     
 }
