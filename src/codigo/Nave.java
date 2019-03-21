@@ -32,13 +32,13 @@ public class Nave {
         
         if(pulsadoIzquierda && x > 0){
             
-            x-=3;
+            x-=5;
             
         }
         
         if(pulsadoDerecha && x < VentanaJuego.ANCHOPANTALLA - imagen.getWidth(null)){
             
-            x+=3;
+            x+=5;
             
         }
     }
