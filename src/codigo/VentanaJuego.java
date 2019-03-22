@@ -8,10 +8,15 @@ package codigo;
 import com.sun.glass.events.KeyEvent;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.Timer;
 
 /**
@@ -41,6 +46,9 @@ public class VentanaJuego extends javax.swing.JFrame {
     
     // el contador sirve para decidir que imgen del marciano toca poner
     int contador = 0;
+    // imagen para cargar el spritesheet con todos los sprites del juego
+    BufferedImage plantilla = null;
+    Image [] imagenes = new Image[30];
     
     
     
@@ -57,20 +65,43 @@ public class VentanaJuego extends javax.swing.JFrame {
      */
     public VentanaJuego() {
         initComponents();
+        try {
+            plantilla = ImageIO.read(getClass().getResource("/imagenes/invaders2.png"));
+        } catch (IOException ex) {  
+        }
+        // Cargo las imagenes de forma individual en cada imagen del array de imagenes
+        for(int i = 0; i<5; i++){
+            for(int j = 0; j<4; j++){
+                imagenes[i*4 + j] = plantilla.getSubimage(j*64,i*64 , 64, 64);
+                imagenes[i*4 + j] = imagenes[i*4 + j].getScaledInstance(32, 32, Image.SCALE_SMOOTH);
+            }
+        }
+        // la ultima fila del spritesheet solo mide 32 de alto, asique hay que hacerlo aparte
+        for(int j = 0; j<4 ; j++){
+            imagenes[20+j] = plantilla.getSubimage(j*64, 5*64, 64, 32);
+        }
         setSize(ANCHOPANTALLA, ALTOPANTALLA);
         buffer = (BufferedImage) jPanel1.createImage(ANCHOPANTALLA, ALTOPANTALLA);
         buffer.createGraphics();
         
         temporizador.start();
         
+        
+        //Cambio la imagen de la nave dentro del sprite de imagenes
+        miNave.imagen = imagenes[21];
         //inicializo la posicion inicial de la nave
         miNave.x = ANCHOPANTALLA/2 - miNave.imagen.getWidth(this)/2;
         miNave.y = ALTOPANTALLA - miNave.imagen.getHeight(this)-30;
+        
+        
         
         // inicializo el array de marcianos
         for(int i=0; i<filas; i++){
             for(int j=0; j<columnas; j++){
                 listaMarcianos[i][j] = new Marciano();
+                
+                listaMarcianos[i][j].imagen1 = imagenes[2*i];
+                listaMarcianos[i][j].imagen2 = imagenes[2*i+1];
                 listaMarcianos[i][j].x = j*(15+listaMarcianos[i][j].imagen1.getWidth(null));
                 listaMarcianos[i][j].y = i*(15+listaMarcianos[i][j].imagen1.getHeight(null));
             }
