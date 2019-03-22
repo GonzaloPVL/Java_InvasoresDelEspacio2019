@@ -70,6 +70,7 @@ public class VentanaJuego extends javax.swing.JFrame {
         } catch (IOException ex) {  
         }
         // Cargo las imagenes de forma individual en cada imagen del array de imagenes
+        // Convertimos lo que sería un array de dos dimensiones en uno array de una dimension
         for(int i = 0; i<5; i++){
             for(int j = 0; j<4; j++){
                 imagenes[i*4 + j] = plantilla.getSubimage(j*64,i*64 , 64, 64);
