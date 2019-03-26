@@ -1,9 +1,15 @@
 
 package codigo;
 
+
 import java.awt.Image;
 import java.io.IOException;
 import javax.imageio.ImageIO;
+import java.io.File;
+import javax.sound.sampled.AudioFileFormat;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+
 
 /**
  *
@@ -14,8 +20,6 @@ public class Disparo {
     public int x = 0;
     public int y = 2000; // al principio el disparo
     public boolean disparado = false;
-    
-    
     
     public Disparo(){
         try {
