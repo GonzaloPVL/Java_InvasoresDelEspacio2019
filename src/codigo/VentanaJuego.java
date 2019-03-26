@@ -32,7 +32,7 @@ public class VentanaJuego extends javax.swing.JFrame {
     static int ALTOPANTALLA = 450;
     
     //numero de marcianos que van a aparecer
-    int filas = 5;
+    int filas = 8;
     int columnas = 10;
     int marcador = 50;
     
@@ -92,18 +92,35 @@ public class VentanaJuego extends javax.swing.JFrame {
         
         
         // inicializo el array de marcianos
-        for(int i=0; i<filas; i++){
-            for(int j=0; j<columnas; j++){
-                listaMarcianos[i][j] = new Marciano();
-                
-                listaMarcianos[i][j].imagen1 = imagenes[0][0];
-                listaMarcianos[i][j].imagen2 = imagenes[0][1];
-                listaMarcianos[i][j].x = j*(15+listaMarcianos[i][j].imagen1.getWidth(null));
-                listaMarcianos[i][j].y = i*(15+listaMarcianos[i][j].imagen1.getHeight(null));
-            }
-        }
+        
+       //1º numero de filas de marcianos que estoy creando
+       //2º parametro fila dentro del spritesheet
+       //3º parametro columna dentro del spritesheet para elegir el marciano
+        
+        creaFilaDeMarcianos(0, 0, 2);
+        creaFilaDeMarcianos(1, 2, 2);
+        creaFilaDeMarcianos(2, 4, 0);
+        creaFilaDeMarcianos(3, 0, 2);
+        creaFilaDeMarcianos(4, 0, 2);
+        creaFilaDeMarcianos(5, 0, 2);
+        creaFilaDeMarcianos(6, 0, 2);
+        creaFilaDeMarcianos(7, 0, 2);
 
     }
+    
+    
+    private void creaFilaDeMarcianos (int numFila, int spriteFila, int spriteColumna){
+        
+        for(int j=0; j<columnas; j++){
+                listaMarcianos[numFila][j] = new Marciano();
+                listaMarcianos[numFila][j].imagen1 = imagenes[spriteFila][spriteColumna];
+                listaMarcianos[numFila][j].imagen2 = imagenes[spriteFila][spriteColumna];
+                listaMarcianos[numFila][j].x = j*(15+listaMarcianos[numFila][j].imagen1.getWidth(null));
+                listaMarcianos[numFila][j].y = numFila*(15+listaMarcianos[numFila][j].imagen1.getHeight(null));
+            }
+    }
+    
+    
     //este metodo va a servir para crear el array de imagenes con tdaslas imagenes
     // del sprite . Devolverá un array de dos dimensiones con la imagenes colocadas
     private Image[][] cargaImagenes(String nombreArchivoImagen, 
