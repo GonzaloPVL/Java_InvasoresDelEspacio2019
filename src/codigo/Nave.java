@@ -37,6 +37,7 @@ public class Nave {
             x+=5;
             
         }
+        
     }
 
     public boolean isPulsadoDerecha() {

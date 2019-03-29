@@ -20,6 +20,7 @@ public class Disparo {
     public int x = 0;
     public int y = 2000; // al principio el disparo
     public boolean disparado = false;
+    Clip sonidoDisparo;
     
     public Disparo(){
         try {
