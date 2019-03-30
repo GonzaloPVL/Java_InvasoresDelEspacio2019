@@ -87,7 +87,7 @@ public class VentanaJuego extends javax.swing.JFrame {
      */
     public VentanaJuego() { //"/imagenes/angryBirds.png", 3, 3, 129, 124, 4
         initComponents();
-        imagenes = cargaImagenes("/imagenes/angryBirds.png", 3, 3, 129, 124, 4);
+        imagenes = cargaImagenes("/imagenes/angryBirds.png", 3, 3, 129, 121, 4);
                                 //(nombredearchivo, filas, columnas, ancho , alto, escala)
                                 // ancho y alto de cada sprite dentro del spritesheet
                                 //escala para cambiar el tamaño
@@ -295,7 +295,7 @@ public class VentanaJuego extends javax.swing.JFrame {
                                     miDisparo.imagen.getWidth(null),
                                     miDisparo.imagen.getHeight(null));
         rectanguloNave.setFrame(miNave.x,
-                                miNave.y+50, 
+                                miNave.y+30, 
                                 miNave.imagen.getWidth(null),
                                 miNave.imagen.getHeight(null));
         
